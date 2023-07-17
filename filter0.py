@@ -31,8 +31,7 @@ for file_name in os.listdir(input_dir):
                 # Clean the text in the filtered chunk
                 filtered_chunk0 = filtered_chunk.copy()
                 filtered_chunk0['cleaned_text'] = filtered_chunk[4].apply(clean_text)
-                filtered_chunk0['is_en'] = filtered_chunk[4].apply(is_text_english)
-
+                # filtered_chunk0['is_en'] = filtered_chunk[4].apply(is_text_english)
 
                 # Write the filtered chunk to the output CSV file
                 filtered_chunk0.to_csv(f_out, header=False, index=False, mode="a")
