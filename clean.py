@@ -8,7 +8,6 @@ from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 import string
 import re
-from textblob import TextBlob
 from langdetect import detect
 
 nltk.download('stopwords')
