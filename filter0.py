@@ -25,14 +25,17 @@ for file_name in os.listdir(input_dir):
     if file_name.endswith("twitter.csv"):
         with open(output_csv, "w") as f_out:
             # Iterate over the chunks of the input CSV file
-            for chunk in pd.read_csv(file_path, header=None, chunksize=chunk_size):
+            for chunk in pd.read_csv(file_path, header=None, chunksize=chunk_size, nrows=10000):
                 filtered_chunk = chunk[chunk[4].apply(lambda x: any(keyword in str(x).lower() for keyword in keywords0))]
 
                 # Clean the text in the filtered chunk
                 filtered_chunk0 = filtered_chunk.copy()
                 filtered_chunk0['cleaned_text'] = filtered_chunk[4].apply(clean_text)
-                # filtered_chunk0['is_en'] = filtered_chunk[4].apply(is_text_english)
-
+                
+                filtered_chunk1 = filtered_chunk0.copy()
+                filtered_chunk1['is_en'] = filtered_chunk0['cleaned_text'].apply(lambda x: not any(char not in '0123456789abcdefghijklmnopqrstuvwxyz' for char in str(x)))
+                print(filtered_chunk1[[4, 'cleaned_text', 'is_en']].head(100))
+                
                 # Write the filtered chunk to the output CSV file
                 filtered_chunk0.to_csv(f_out, header=False, index=False, mode="a")
                 

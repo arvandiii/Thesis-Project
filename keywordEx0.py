@@ -9,7 +9,7 @@ nltk.download('punkt')
 
 # Load your dataset from a CSV file without a header, specify the header name
 header_name = 'text'  # Replace with your desired header name
-df = pd.read_csv('Filter0/2022-08-07_twitter.csv', usecols=[4], header=None, names=[header_name])
+df = pd.read_csv('Filter0/2022-08-23_twitter.csv', usecols=[4], header=None, names=[header_name])
 
 # Extract the text from the specified column
 texts = df[header_name].tolist()

@@ -1,20 +1,19 @@
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-from nltk.probability import FreqDist
 from gensim import corpora, models
 import pandas as pd
+import random
 
 nltk.download('stopwords')
 nltk.download('punkt')
 
 # Load your dataset from a CSV file without a header, specify the header name
 header_name = 'text'  # Replace with your desired header name
-df = pd.read_csv('Filter0/2022-08-23_twitter.csv', usecols=[4], header=None, names=[header_name])
+df = pd.read_csv('Filter0/2022-08-23_twitter.csv', header=None, names=[header_name], nrows=10000)
 
 # Extract the text from the specified column
 texts = df[header_name].tolist()
-
 
 # Preprocess the text data
 stop_words = set(stopwords.words('english'))
@@ -43,3 +42,15 @@ for topic_id in range(num_topics):
     topic_keywords = lda_model.show_topic(topic_id, topn=10)
     keyword_list = [keyword for keyword, _ in topic_keywords]
     print(f"Topic {topic_id + 1}: {', '.join(keyword_list)}")
+
+    # Get topic distribution for each document
+    doc_topics = lda_model.get_document_topics(corpus)
+
+    # Filter documents with high probability for the current topic
+    relevant_docs = [texts[i] for i, topics in enumerate(doc_topics) if any(topic[0] == topic_id for topic in topics)]
+
+    # Print examples
+    print("Examples:")
+    for doc in random.sample(relevant_docs, k=min(5, len(relevant_docs))):
+        print(doc)
+    print()
