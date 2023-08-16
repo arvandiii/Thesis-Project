@@ -7,7 +7,7 @@ from nltk.stem import WordNetLemmatizer
 
 from utils import get_files
 
-normalized_headers = ['type', 'timestamp', 'user', 'text', 'subreddit', 'cleaned_text']
+normalized_headers = ['type', 'timestamp', 'user', 'text', 'subreddit', 'clean_text']
 chunk_size = 10000
 
 lemmatizer = WordNetLemmatizer()
@@ -34,5 +34,5 @@ def clean(dir_in, dir_out):
         with open(output_path, "w") as f_out:
             for chunk in pd.read_csv(path, header=0, chunksize=chunk_size):
                 filtered_chunk = chunk.copy()
-                filtered_chunk['cleaned_text'] = filtered_chunk['text'].apply(clean_text)
+                filtered_chunk['clean_text'] = filtered_chunk['text'].apply(clean_text)
                 filtered_chunk.to_csv(f_out, header=normalized_headers, index=False, mode="a")

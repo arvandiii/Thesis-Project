@@ -6,12 +6,13 @@ from filter_lang import filter_lang
 from filter_relevant import filter_relevant
 from filter_keyword import filter_keyword
 
-stages = [(normalize, True), (clean, True), (filter_keyword, False), (filter_lang, False), (filter_relevant, False)]
+stages = [(normalize, False), (clean, False), (filter_keyword, False), (filter_lang, True), (filter_relevant, False)]
 
 def run(dir_in, dir_out):
     current_dir_in = dir_in
     for stage, enabled in stages:
         if not enabled: continue
+        print('stage: ' + stage.__name__ + ' started')
         dir_out_sub = os.path.join(dir_out, stage.__name__)
         if not os.path.exists(dir_out_sub):
             os.makedirs(dir_out_sub)
