@@ -19,10 +19,10 @@ def clean_text(text):
     text = re.sub(r'http\S+|www\S+', ' LINK ', text)
     text = re.sub(r'@\S+', ' MENTION ', text)
     tokens = simple_preprocess(text)
-    tokens = [token for token in tokens if token not in STOPWORDS]
-    tokens = [token for token in tokens if len(token) > 2]
-    tokens = [token for token in tokens if not any(c.isdigit() for c in token)]
-    tokens = [lemmatizer.lemmatize(token) for token in tokens if len(token) > 2]
+    # tokens = [token for token in tokens if token not in STOPWORDS]
+    # tokens = [token for token in tokens if len(token) > 2]
+    # tokens = [token for token in tokens if not any(c.isdigit() for c in token)]
+    # tokens = [lemmatizer.lemmatize(token) for token in tokens if len(token) > 2]
     cleaned_text = ' '.join(tokens)
     return cleaned_text
 

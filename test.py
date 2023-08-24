@@ -1,29 +1,20 @@
 import os
 import pandas as pd
+from utils import get_files
 
-input_dir = "DB"
-output_dir = "alaki"
+# files = [fp for fn, fp in get_files('faghatr/filter_lang')]
+# print('files', files)
 
-def is_not_zero(text):
-    return not(text == 0 or text == '0' or text == 1 or text == '1')
+# dfs = [pd.read_csv(f, index_col=0) for f in files]
 
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
+# # Combine the list of dataframes
+# df = pd.concat(dfs, ignore_index=True)
 
-chunk_size = 10000
 
-limit = 20
-for file_name in os.listdir(input_dir):
-    file_path = os.path.join(input_dir, file_name)
-    output_csv = output_dir + '/' + file_name
-    print(file_name)
-    if file_name.endswith("twitter.csv"):
-        with open(output_csv, "w") as f_out:
-            for chunk in pd.read_csv(file_path, header=None, chunksize=chunk_size):
-                filtered_chunk = chunk[chunk[5].apply(is_not_zero) | chunk[6].apply(is_not_zero) | chunk[7].apply(is_not_zero)]
-                filtered_chunk.to_csv(f_out, header=False, index=False, mode="a")
-                break
-        print("Filtered data saved to", output_csv)
-        limit -= 1
-    if limit <= 0:
-        break
+df = pd.read_csv('DB/2022-08-22_reddit.csv', chunksize=100)
+print(df.head())
+
+print('Training Set Shape = {}'.format(df.shape))
+# print(df["subreddit"].describe())
+# counts = df['subreddit'].value_counts().to_dict()
+# print(counts)

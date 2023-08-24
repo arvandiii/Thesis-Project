@@ -6,7 +6,7 @@ from filter_lang import filter_lang
 from filter_relevant import filter_relevant
 from filter_keyword import filter_keyword
 
-stages = [(normalize, False), (clean, False), (filter_keyword, False), (filter_lang, True), (filter_relevant, False)]
+stages = [(normalize, True), (clean, True), (filter_keyword, True), (filter_lang, True), (filter_relevant, False)]
 
 def run(dir_in, dir_out):
     current_dir_in = dir_in

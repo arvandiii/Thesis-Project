@@ -2,8 +2,6 @@ import pandas as pd
 import emoji
 import re
 from gensim.utils import simple_preprocess
-from gensim.parsing.preprocessing import STOPWORDS
-from nltk.stem import WordNetLemmatizer
 import fasttext
 
 from utils import get_files
@@ -26,7 +24,6 @@ model = fasttext.load_model('lid.176.bin')
 def is_eng(text):
     text = clean_text(text)
     prediction = model.predict(text)
-    print(prediction[0], text)
     return prediction[0][0] == '__label__en'
 
 
@@ -35,7 +32,9 @@ def filter_lang(dir_in, dir_out):
     for file_name, path in files:
         output_path = dir_out + '/' + file_name
         with open(output_path, "w") as f_out:
+            print('kodome ', file_name)
             for chunk in pd.read_csv(path, header=0, chunksize=chunk_size):
                 filtered_chunk = chunk[chunk['text'].apply(is_eng)]
+                if len(filtered_chunk) == 0: continue
                 filtered_chunk.to_csv(f_out, header=normalized_headers, index=False, mode="a")
         
