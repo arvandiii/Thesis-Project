@@ -5,7 +5,9 @@
                 "fire",
                 "wildfire",
                 "smoke",
-                "evacuation"
+                "evacuat",
+                "kelowna",
+                "william lake"
             ],
             "subreddits": [
                 "KelownaBC",
@@ -16,7 +18,8 @@
                 "ilovebc",
                 "canada",
                 "vancouver",
-                "britishcolumbia"
+                "britishcolumbia",
+                "all"
             ]
         }
     ]
